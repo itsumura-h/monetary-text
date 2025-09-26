@@ -107,6 +107,15 @@ def convert_links(html: str) -> str:
         anchor = match.group(2) or ""
         if href.startswith("http://") or href.startswith("https://"):
             return match.group(0)
+        
+        # Handle chapters/ prefix - remove it since all HTML files are in root
+        if href.startswith("chapters/"):
+            href = href[9:]  # Remove "chapters/" prefix
+        
+        # Handle other directory prefixes (glossary/, references/, etc.)
+        if "/" in href:
+            href = href.split("/")[-1]  # Get just the filename
+            
         return f'href="{href}.html{anchor}"'
 
     return LINK_PATTERN.sub(_replace, html)
@@ -124,12 +133,25 @@ def build_chapters() -> List[Chapter]:
     if not CHAPTERS_DIR.exists():
         raise FileNotFoundError(f"Chapters directory not found: {CHAPTERS_DIR}")
 
+    # Build chapters from chapters/ directory
     for md_file in sorted(CHAPTERS_DIR.glob("*.md")):
         text = load_markdown(md_file)
         title = extract_title(text, md_file.stem)
         output_name = f"{md_file.stem}.html"
         chapter = Chapter(source=md_file, title=title, output_name=output_name)
         chapters.append(chapter)
+    
+    # Build additional files from glossary/ and references/ directories
+    additional_dirs = [BASE_DIR / "glossary", BASE_DIR / "references"]
+    for dir_path in additional_dirs:
+        if dir_path.exists():
+            for md_file in sorted(dir_path.glob("*.md")):
+                text = load_markdown(md_file)
+                title = extract_title(text, md_file.stem)
+                output_name = f"{md_file.stem}.html"
+                chapter = Chapter(source=md_file, title=title, output_name=output_name)
+                chapters.append(chapter)
+    
     return chapters
 
 
