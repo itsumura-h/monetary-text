@@ -254,12 +254,25 @@ code {
     )
 
 
-def render_index(chapters: Iterable[Chapter], year: int) -> str:
-    items_html = "\n      ".join(
-        f'<li><a href="{chapter.output_name}">{chapter.title}</a></li>'
-        for chapter in chapters
-    )
-    return INDEX_TEMPLATE.format(items=items_html, year=year)
+def render_index_from_readme(chapters: Iterable[Chapter], year: int) -> str:
+    readme_path = BASE_DIR / "README.md"
+    if readme_path.exists():
+        readme_content = load_markdown(readme_path)
+        html_content = markdown.markdown(readme_content, extensions=MD_EXTENSIONS, output_format="html5")
+        html_content = convert_links(html_content)
+        return HTML_TEMPLATE.format(
+            title="貨幣論教科書", 
+            nav="", 
+            content=html_content, 
+            year=year
+        )
+    else:
+        # Fallback to original chapter list if README.md doesn't exist
+        items_html = "\n      ".join(
+            f'<li><a href="{chapter.output_name}">{chapter.title}</a></li>'
+            for chapter in chapters
+        )
+        return INDEX_TEMPLATE.format(items=items_html, year=year)
 
 
 def main() -> None:
@@ -279,7 +292,7 @@ def main() -> None:
         target_path = OUTPUT_DIR / chapter.output_name
         write_file(target_path, html)
 
-    index_html = render_index(chapters, year)
+    index_html = render_index_from_readme(chapters, year)
     write_file(OUTPUT_DIR / "index.html", index_html)
 
 
