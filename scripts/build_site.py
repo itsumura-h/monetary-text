@@ -21,6 +21,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
   <meta charset=\"utf-8\" />
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+  <meta name=\"robots\" content=\"noindex, nofollow, noarchive, nosnippet, nocache\" />
+  <meta name=\"googlebot\" content=\"noindex, nofollow, noarchive, nosnippet, nocache\" />
   <title>{title} | 貨幣論教科書</title>
   <link rel=\"stylesheet\" href=\"assets/style.css\" />
 </head>
@@ -47,6 +49,8 @@ INDEX_TEMPLATE = """<!DOCTYPE html>
 <head>
   <meta charset=\"utf-8\" />
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+  <meta name=\"robots\" content=\"noindex, nofollow, noarchive, nosnippet, nocache\" />
+  <meta name=\"googlebot\" content=\"noindex, nofollow, noarchive, nosnippet, nocache\" />
   <title>貨幣論教科書 | 章一覧</title>
   <link rel=\"stylesheet\" href=\"assets/style.css\" />
 </head>
