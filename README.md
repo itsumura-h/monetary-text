@@ -81,7 +81,6 @@ https://itsumura-h.github.io/monetary-text/
 - **[第48章：公共貨幣フォーラム——債務貨幣システムからの脱却](chapters/公共貨幣フォーラム_債務貨幣からの脱却.md)**
 
 ### 付録・資料
-- **[用語集](glossary/用語集.md)**
 - **[参考文献一覧](references/参考文献.md)**
 - **[索引](references/索引.md)**
 
@@ -120,7 +119,6 @@ https://itsumura-h.github.io/monetary-text/
 │   └── rules/branch/           # ブランチ別ルール
 ├── chapters/                   # 各章のMarkdownファイル
 ├── references/                 # 参考文献・資料
-├── glossary/                   # 用語集
 ├── figures/                    # 図表・グラフ
 └── assets/                     # その他のリソース
 ```
